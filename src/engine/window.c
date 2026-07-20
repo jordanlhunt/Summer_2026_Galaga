@@ -1,12 +1,4 @@
 #include "../../include/engine/window.h"
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_init.h>
-#include <SDL3/SDL_keycode.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_video.h>
-#include <stdbool.h>
-#include <stdlib.h>
 
 Window *WindowCreate(const char *title, int width, int height) {
   // Create SDL SubSystems
@@ -18,7 +10,8 @@ Window *WindowCreate(const char *title, int width, int height) {
   if (gameWindow == NULL) {
     return NULL;
   }
-  gameWindow->sdlWindow = SDL_CreateWindow(title, width, height, 0);
+  gameWindow->sdlWindow =
+      SDL_CreateWindow(title, width, height, SDL_WINDOW_HIDDEN);
   if (gameWindow->sdlWindow == NULL) {
     SDL_Log("SDL_CreateWindow failed: %s\n", SDL_GetError());
     free(gameWindow);
@@ -36,6 +29,7 @@ Window *WindowCreate(const char *title, int width, int height) {
   SDL_SetRenderLogicalPresentation(gameWindow->sdlRenderer, width, height,
                                    SDL_LOGICAL_PRESENTATION_DISABLED);
   gameWindow->isRunning = true;
+
   return gameWindow;
 }
 

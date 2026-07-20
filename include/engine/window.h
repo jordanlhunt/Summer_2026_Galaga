@@ -6,11 +6,11 @@
 typedef struct Window {
   SDL_Window *sdlWindow;
   SDL_Renderer *sdlRenderer;
-  bool isQuit;
+  bool isRunning;
 } Window;
 
 Window *WindowCreate(const char *title, int width, int height);
 void WindowDestroy(Window *window);
 bool WindowPollEvents(Window *window);
-void WindowGetRenderer(Window *window);
+void *WindowGetRenderer(Window *window);
 #endif

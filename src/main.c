@@ -2,7 +2,7 @@
 
 int main(void) {
   Window *gameWindow =
-      WindowCreate("MOBY - OUTLAW PIRATE STARFIGHTER", 224, 288);
+      WindowCreate("MOBY - OUTLAW PIRATE STARFIGHTER", 800, 600);
   if (gameWindow == NULL) {
     return 1;
   }

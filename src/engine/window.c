@@ -26,15 +26,10 @@ Window *WindowCreate(const char *title, int width, int height) {
     SDL_Quit();
     return NULL;
   }
-
-  /* 2. Draw the blue frame while still hidden */
   SDL_SetRenderDrawColor(gameWindow->sdlRenderer, 100, 149, 237, 255);
   SDL_RenderClear(gameWindow->sdlRenderer);
   SDL_RenderPresent(gameWindow->sdlRenderer);
-
-  /* 3. Only now let the compositor see the window */
   SDL_ShowWindow(gameWindow->sdlWindow);
-
   // Set the logical size so coordinates are fixed
   SDL_SetRenderLogicalPresentation(gameWindow->sdlRenderer, width, height,
                                    SDL_LOGICAL_PRESENTATION_DISABLED);

@@ -13,6 +13,7 @@ void TimerDestroy(Timer *timer) { free(timer); }
 double TimerTick(Timer *timer) {
   uint64_t currentPerformanceCounter = SDL_GetPerformanceCounter();
   uint64_t deltaTime = currentPerformanceCounter - timer->performanceCounter;
+  timer->performanceCounter = currentPerformanceCounter;
   return ((double)deltaTime / (double)timer->performanceFrequency);
 }
 void TimerCapFramesPerSecond(Timer *timer, double targetFps) {
@@ -24,7 +25,5 @@ void TimerCapFramesPerSecond(Timer *timer, double targetFps) {
     double sleepTime =
         (targetFramePerSecond - elapsedTime) * 1000.0; // milliseconds
     SDL_Delay((uint32_t)sleepTime);
-    timer->performanceCounter +=
-        (uint64_t)(sleepTime * timer->performanceFrequency / 1000.0);
   }
 }

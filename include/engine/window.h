@@ -1,8 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-#include <SDL3/SDL.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include "../common.h"
 typedef struct Window {
   SDL_Window *sdlWindow;
   SDL_Renderer *sdlRenderer;

@@ -15,5 +15,8 @@ src/main.c
 src/engine/window.c
 src/engine/timer.c)
 
+
+target_include_directories(starfighterGame PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_precompile_headers(starfighterGame PRIVATE ${CMAKE_SOURCE_DIR}/include/common.h)
 add_executable(starfighterGame ${SOURCES})
 target_link_libraries(starfighterGame PRIVATE SDL3::SDL3)

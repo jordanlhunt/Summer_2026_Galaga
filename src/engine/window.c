@@ -1,4 +1,4 @@
-#include "../../include/engine/window.h"
+#include "engine/window.h"
 #include <SDL3/SDL_video.h>
 Window *WindowCreate(const char *title, int width, int height) {
   // Create SDL SubSystems

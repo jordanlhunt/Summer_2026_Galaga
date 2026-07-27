@@ -1,8 +1,6 @@
 #ifndef TIMER_H
 #define TIMER_H
-#include <SDL3/SDL.h>
-#include <stdint.h>
-#include <stdlib.h>
+#include "../common.h"
 
 typedef struct Timer {
   uint64_t performanceFrequency;

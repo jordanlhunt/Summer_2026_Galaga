@@ -1,4 +1,4 @@
-#include "../../include/engine/timer.h"
+#include "engine/timer.h"
 
 Timer *TimerCreate() {
   Timer *newTimer = malloc(sizeof(Timer));

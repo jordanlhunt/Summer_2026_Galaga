@@ -1,11 +1,14 @@
 #include "../include/main.h"
 static double gameTime = 0.0;
-static void GameUpdate(double deltaTime) {
+static void GameUpdate(double deltaTime, Input *inputSystem) {
   gameTime += deltaTime;
   static double printTimer = 0.0;
   printTimer += deltaTime;
   if (printTimer >= 1.0) {
     printTimer = 0.0;
+  }
+  if (InputIsKeyPressed(inputSystem, SDL_SCANCODE_SPACE) == true) {
+    printf("[main.c - GameUpdate()] - Spacebar has been pressed");
   }
 }
 static void GameRender(SDL_Renderer *sdlRenderer) {
@@ -19,12 +22,22 @@ int main(void) {
   if (gameWindow == NULL) {
     return 1;
   }
+
   SDL_Renderer *sdlRenderer = (SDL_Renderer *)WindowGetRenderer(gameWindow);
   Timer *timer = TimerCreate();
   if (timer == NULL) {
     WindowDestroy(gameWindow);
     return 1;
   }
+
+  // Systems
+  Input *inputSystem = InputCreate();
+  if (inputSystem == NULL) {
+    TimerDestroy(timer);
+    WindowDestroy(gameWindow);
+    return 1;
+  }
+
   double accumulator = 0.0;
   bool isRunning = true;
   while (isRunning) {
@@ -35,12 +48,14 @@ int main(void) {
     accumulator += frameTime;
     while (accumulator >= DELTA_TIME) {
       isRunning = WindowPollEvents(gameWindow);
-      GameUpdate(DELTA_TIME);
+      InputUpdate(inputSystem);
+      GameUpdate(DELTA_TIME, inputSystem);
       accumulator -= DELTA_TIME;
     }
     GameRender(sdlRenderer);
     TimerCapFramesPerSecond(timer, 144.0);
   }
+  InputDestroy(inputSystem);
   TimerDestroy(timer);
   WindowDestroy(gameWindow);
   return 0;

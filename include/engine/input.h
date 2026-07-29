@@ -9,7 +9,7 @@ typedef struct Input {
 Input *InputCreate();
 void InputDestroy(Input *input);
 void InputUpdate(Input *input);
-bool InputIsKeyDown(Input *input, SDL_Scancode sdlScanCodeKey);
-bool InputIsKeyPressed(Input *input, SDL_Scancode sdlScanCodeKey);
-bool InputIsKeyReleased(Input *input, SDL_Scancode sdlScaneCodeKey);
+bool InputIsKeyDown(Input *input, SDL_Scancode sdlScanCode);
+bool InputIsKeyPressed(Input *input, SDL_Scancode sdlScanCode);
+bool InputIsKeyReleased(Input *input, SDL_Scancode sdlScaneCode);
 #endif

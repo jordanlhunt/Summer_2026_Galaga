@@ -11,7 +11,8 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(SOURCES
     src/main.c
     src/engine/window.c
-    src/engine/timer.c)
+    src/engine/timer.c
+    src/engine/input.c)
 
 add_executable(starfighterGame ${SOURCES})
 target_include_directories(starfighterGame PRIVATE ${CMAKE_SOURCE_DIR}/include)

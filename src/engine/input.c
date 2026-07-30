@@ -7,18 +7,19 @@ Input *InputCreate() {
   }
   memset(input->currentKeys, 0, sizeof(input->currentKeys));
   memset(input->previousKeys, 0, sizeof(input->previousKeys));
+  return input;
 }
 void InputDestroy(Input *input) { free(input); }
 void InputUpdate(Input *input) {
   // Move current frame's state into previous
-  memccpy(input->previousKeys, input->currentKeys, sizeof(input->previousKeys));
+  memcpy(input->previousKeys, input->currentKeys, sizeof(input->previousKeys));
   int numkeys;
   const bool *currentKeyboardStateArray = SDL_GetKeyboardState(&numkeys);
   int count;
   if (numkeys < INPUT_NUM_KEYS) {
     count = numkeys;
   } else {
-    numkeys = INPUT_NUM_KEYS;
+    count = INPUT_NUM_KEYS;
   }
   memcpy(input->currentKeys, currentKeyboardStateArray, (count * sizeof(bool)));
 }

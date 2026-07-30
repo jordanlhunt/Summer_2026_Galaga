@@ -5,15 +5,19 @@ project("MOBY - OUTLAW PIRATE STARFIGHTER"
     LANGUAGES C
 )
 find_package(SDL3 REQUIRED)
+
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-set(SOURCES
+add_executable(starfighterGame)
+
+target_sources(starfighterGame PRIVATE
     src/main.c
     src/engine/window.c
     src/engine/timer.c
-    src/engine/input.c)
+    src/engine/input.c
+)
 
-add_executable(starfighterGame ${SOURCES})
+
 target_include_directories(starfighterGame PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(starfighterGame PRIVATE SDL3::SDL3)

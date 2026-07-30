@@ -13,6 +13,7 @@ add_executable(starfighterGame)
 
 target_sources(starfighterGame PRIVATE
     src/main.c
+    src/game.c
     src/engine/window.c
     src/engine/timer.c
     src/engine/input.c

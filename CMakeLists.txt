@@ -17,6 +17,7 @@ target_sources(starfighterGame PRIVATE
     src/engine/window.c
     src/engine/timer.c
     src/engine/input.c
+    src/engine/entity.c
 )
 
 

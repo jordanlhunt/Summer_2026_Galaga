@@ -29,41 +29,41 @@ void EntitySpawn(int entityType, float x, float y, SDL_Texture *sdlTexture,
       return;
     }
   }
-  void EntityDestroy(Entity * entity)
+}
+void EntityDestroy(Entity *entity)
+{
+  if (entity != NULL && entity->isActive)
   {
-    if (entity != NULL && entity->isActive)
-    {
-      entity.isActive = false;
-      entityCount -= 1;
-    }
+    entity->isActive = false;
+    entityCount -= 1;
   }
-  void EntityUpdateAll(float deltaTime)
+}
+void EntityUpdateAll(float deltaTime)
+{
+  for (int i = 0; i < MAX_ENTITIES; i++)
   {
-    for (int i = 0; i < MAX_ENTITIES; i++)
+    if (entities[i].isActive)
     {
-      if (entities[i].isActive)
+      entities[i].positionX += entities[i].velocityX * deltaTime;
+      entities[i].positionY += entities[i].velocityY * deltaTime;
+      if (entities[i].timer > 0.0f)
       {
-        entities[i].positionX += entities[i].velocityX * deltaTime;
-        entities[i].positionY += entities[i].velocityY * deltaTime;
-        if (entities[i].timer > 0.0f)
-        {
-          entities[i].timer -= deltaTime;
-        }
+        entities[i].timer -= deltaTime;
       }
     }
   }
-  void EntityRenderAll(SDL_Renderer * sdlRenderer)
+}
+void EntityRenderAll(SDL_Renderer *sdlRenderer)
+{
+  for (int i = 0; i < MAX_ENTITIES; i++)
   {
-    for (int i = 0; i < MAX_ENTITIES; i++)
+    if (entities[i].isActive && entities[i].sdlTexture != NULL)
     {
-      if (entities[i].isActive && entities[i].sdlTexture != NULL)
-      {
-        SDL_Rect destinationRect = {.x = (int)entities[i].positionX,
-                                    .y = (int)entities[i].positionY,
-                                    .w = entities[i].width,
-                                    .y = entities[i].height};
-        SDL_RenderCopy(sdlRenderer, entities[i].sdlTexture, NULL, &destinationRect);
-      }
+      SDL_Rect destinationRect = {.x = (int)entities[i].positionX,
+                                  .y = (int)entities[i].positionY,
+                                  .w = entities[i].width,
+                                  .h = entities[i].height};
+      SDL_RenderCopy(sdlRenderer, entities[i].sdlTexture, NULL, &destinationRect);
     }
   }
 }

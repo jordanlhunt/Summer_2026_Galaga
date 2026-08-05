@@ -1,15 +1,18 @@
 #ifndef ENTITY_H
+#define ENTITY_H
 #include "../common.h"
 #define MAX_ENTITIES 256
 
-typedef enum ENTITY_TYPE {
+typedef enum ENTITY_TYPE
+{
   ENTITY_NONE,
   ENTITY_PLAYER,
   ENTITY_ENEMY,
   ENTITY_BULLET_PLAYER,
   ENTITY_BULLET_ENEMY
 } ENTITY_TYPE;
-typedef struct Entity {
+typedef struct Entity
+{
   float positionX;
   float positionY;
   float velocityX;

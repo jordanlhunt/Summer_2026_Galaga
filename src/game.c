@@ -1,4 +1,23 @@
 #include "game.h"
+#include <cstdint>
+
+static SDL_Texture *CreateSolidTexture(SDL_Renderer *sdlRenderer, int width,
+                                       int height, Uint8 red, Uint8 green,
+                                       Uint8 blue) {
+  SDL_Surface *sdlSurface =
+      SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888);
+
+  if (sdlSurface == NULL) {
+    return NULL;
+  }
+  Uint32 color = SDL_MapRGBA(SDL_GetPixelFormatDetails(sdlSurface->format),
+                             NULL, red, green, blue, 255);
+  SDL_Texture *sdlTexture =
+      SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
+  SDL_DestroySurface(sdlSurface);
+  return texture;
+}
+
 Game *GameCreate(const char *title, int width, int height) {
   Game *game = malloc(sizeof(Game));
   if (game == NULL) {

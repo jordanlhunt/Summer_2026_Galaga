@@ -1,12 +1,9 @@
 #include "game.h"
-#include <cstdint>
-
 static SDL_Texture *CreateSolidTexture(SDL_Renderer *sdlRenderer, int width,
                                        int height, Uint8 red, Uint8 green,
                                        Uint8 blue) {
   SDL_Surface *sdlSurface =
       SDL_CreateSurface(width, height, SDL_PIXELFORMAT_RGBA8888);
-
   if (sdlSurface == NULL) {
     return NULL;
   }
@@ -15,9 +12,8 @@ static SDL_Texture *CreateSolidTexture(SDL_Renderer *sdlRenderer, int width,
   SDL_Texture *sdlTexture =
       SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
   SDL_DestroySurface(sdlSurface);
-  return texture;
+  return sdlTexture;
 }
-
 Game *GameCreate(const char *title, int width, int height) {
   Game *game = malloc(sizeof(Game));
   if (game == NULL) {
@@ -44,6 +40,16 @@ Game *GameCreate(const char *title, int width, int height) {
   game->sdlRenderer = (SDL_Renderer *)WindowGetRenderer(game->window);
   game->gameTime = 0.0;
   game->isRunning = true;
+  EntityInitialize();
+  SDL_Texture *pinkTexture =
+      CreateSolidTexture(game->sdlRenderer, 64, 64, 255, 105, 180);
+  if (pinkTexture != NULL) {
+    Entity *testPinkEntity =
+        EntitySpawn(ENTITY_PLAYER, 100.0f, 250.0f, pinkTexture, 64, 64);
+    if (testPinkEntity != NULL) {
+      testPinkEntity->velocityX = 120.0f;
+    }
+  }
   return game;
 }
 void GameDestroy(Game *game) {
@@ -66,34 +72,31 @@ static void GameUpdate(Game *game, double deltaTime) {
   if (InputIsKeyPressed(game->input, SDL_SCANCODE_SPACE)) {
     printf("[game.c - GameUpdate()] - Spacebar has been pressed\n");
   }
+  EntityUpdateAll((float)deltaTime);
 }
 static void GameRender(Game *game) {
   SDL_SetRenderDrawColor(game->sdlRenderer, 100, 149, 237, 255);
   SDL_RenderClear(game->sdlRenderer);
+  EntityRenderAll(game->sdlRenderer);
   SDL_RenderPresent(game->sdlRenderer);
 }
-
 void GameRun(Game *game) {
   if (game == NULL) {
     return;
   }
-
   double accumulator = 0.0;
-
   while (game->isRunning) {
     double frameTime = TimerTick(game->timer);
     if (frameTime > 0.25) {
       frameTime = 0.25;
     }
     accumulator += frameTime;
-
     while (accumulator >= DELTA_TIME) {
       game->isRunning = WindowPollEvents(game->window);
       InputUpdate(game->input);
       GameUpdate(game, DELTA_TIME);
       accumulator -= DELTA_TIME;
     }
-
     GameRender(game);
     TimerCapFramesPerSecond(game->timer, 144.0);
   }

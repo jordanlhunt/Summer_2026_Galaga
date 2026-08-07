@@ -47,10 +47,10 @@ void EntityUpdateAll(float deltaTime) {
 void EntityRenderAll(SDL_Renderer *sdlRenderer) {
   for (int i = 0; i < MAX_ENTITIES; i++) {
     if (entities[i].isActive && entities[i].sdlTexture != NULL) {
-      SDL_Rect destinationRect = {.x = (int)entities[i].positionX,
-                                  .y = (int)entities[i].positionY,
-                                  .w = entities[i].width,
-                                  .h = entities[i].height};
+      SDL_Rect destinationRect = {.x = entities[i].positionX,
+                                  .y = entities[i].positionY,
+                                  .w = (float)entities[i].width,
+                                  .h = (float)entities[i].height};
       SDL_RenderCopy(sdlRenderer, entities[i].sdlTexture, NULL,
                      &destinationRect);
     }
